@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="mike"
@@ -18,7 +18,7 @@
         android:layout_weight="1"/>
 
     <TextView
-        android:id="@+id/tvTel"
+        android:id="@+id/tvValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="123456789"

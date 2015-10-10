@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,25 +54,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View cell = View.inflate(context, R.layout.result_cell, null);
-            return cell;
+            return View.inflate(context, R.layout.result_cell, null);
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            TextView tvName = (TextView) view.findViewById(R.id.tvName);
-            TextView tvTel  = (TextView) view.findViewById(R.id.tvTel);
+            TextView tvKey = (TextView) view.findViewById(R.id.tvKey);
+            TextView tvValue  = (TextView) view.findViewById(R.id.tvValue);
 
             if(cursor.moveToNext()){
-                tvName.setText(cursor.getString(cursor.getColumnIndex("name")));
-                tvTel.setText(cursor.getString(cursor.getColumnIndex("tel")));
+                tvKey.setText(cursor.getString(cursor.getColumnIndex("key")));
+                tvValue.setText(cursor.getString(cursor.getColumnIndex("value")));
             }
         }
     }
 
     private void queryDB() {
         Log.d("test","start query");
-        String querySql = "select * from contacts";
+        String querySql = "select * from maps";
         Cursor c = db.rawQuery(querySql, null);
         allQuery = db.rawQuery(querySql, null);
 
@@ -82,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         while(c.moveToNext()){
             String result =
                 c.getInt(c.getColumnIndex("_id")) + " " +
-                c.getString(c.getColumnIndex("name"))+ " " +
-                c.getString(c.getColumnIndex("tel"));
+                c.getString(c.getColumnIndex("key"))+ " " +
+                c.getString(c.getColumnIndex("value"));
 
             Log.d("test", result);
         }
@@ -121,18 +119,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDB() {
-
-//        db = openOrCreateDatabase("testDatabase",MODE_PRIVATE, null );
-
-        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "database.db";
+        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "Remember.db";
 
         db = SQLiteDatabase.openOrCreateDatabase(path,null);
 
-        initFlag = !isTableExist("contacts");
+//        db = openOrCreateDatabase("testDatabase",MODE_PRIVATE, null );
 
-        String sql = "create table if not exists contacts(_id integer primary key autoincrement," +
-                                                                 "name varchar(20) not null," +
-                                                                "tel varchar(15))";
-        db.execSQL(sql);
+//        initFlag = !isTableExist("contacts");
+
+//        String sql = "create table if not exists contacts(_id integer primary key autoincrement," +
+//                                                                 "name varchar(20) not null," +
+//                                                                "tel varchar(15))";
+//        db.execSQL(sql);
     }
 }
